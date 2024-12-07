@@ -1,4 +1,4 @@
-# Edit3K
+# Edit-3K
 
 Edit3K: Universal Representation Learning for Video Editing Components [[Paper]](https://arxiv.org/pdf/2403.16048) 
 
