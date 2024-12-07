@@ -1,0 +1,60 @@
+# Running config on 24 card A100 machine
+INFO:
+  EXPERIMENT_NAME: "edit_element"
+
+LOG:
+  DIR:  "./output/edit_1014/"
+
+SYS:
+  SEED: 222
+  MULTIPROCESS: True
+  DETERMINISTIC: True
+
+DATA:
+  DATASET:
+    NAME: "EditDataset"
+    EDIT:
+      VIDEO_ROOT: "./raw_videos_iclr_all/"
+      ALL_EDIT: "edit_3k.json"
+      MAX_FRAMES: 16
+      SHAPE: (224, 224)
+      LENGTH: 10000
+  LOADER:
+    BATCH_SIZE: 6
+    NUM_WORKERS: 12
+    SHUFFLE: True
+    MULTIPROCESSING_CONTEXT: "fork"
+
+MODEL:
+  NAME: "Edit"
+  Edit:
+    TASK_TYPE: "represent"
+    LAYERS: 2
+    RAW: False
+  DDP:
+    FIND_UNUSED_PARAMETERS: True
+
+OPTIMIZER:
+  NAME: "BertAdam"
+  BertAdam:
+    lr: 1e-5
+    schedule: "warmup_constant"
+
+LOSS:
+  NAME: "MultiObjectiveLoss"
+  MultiObjectiveLoss:
+    LOSSES: ["InfoNCELossv4", "InfoNCELoss_dyn"]
+
+TRAINER:
+  NAME: "EditTrainer"
+  TRAINER_BASE:
+    EPOCH: 20
+    GRADIENT_ACCUMULATION_STEPS: 1
+    TRAIN_ENABLE: True
+    TEST_ENABLE: True
+    RESUME: None
+    AUTO_RESUME: True
+  EditTrainer:
+    TASK_TYPE: "represent"
+    VID_LR: 1e-6
+    VID_BACKBONE: "clip"
