@@ -23,8 +23,8 @@ pip3 install -r requirements.txt
 
 ### 2.Download datasets
 
-Download the dataset from Google Drive and extract it to the current directory. 
-- [Edit3K]()
+Download the dataset from huggingface and extract it to the current directory. 
+- [Edit3K](https://huggingface.co/datasets/Gstar666/Edit3K/tree/main)
 
 ### 3. Train & Test
 
